@@ -10,10 +10,14 @@
 # A conclusion starting with "car=" is a final answer.
 # Any other conclusion is a helper fact (a concept) that other rules can use.
 
+# Reference: rules as (set of conditions, conclusion) follow Session 3 slide 8; the third part, the reason, is mine.
+# Helper facts that later rules build on are the mammal -> carnivore -> tiger chain of slides 8-9.
 RULES = [
+    # Reference: the same two vetoes as the class example on Session 3 slide 13.
     ({"persons=2"}, "car=unacc", "A car with only two seats is never acceptable (100% Unacc in the data)."),# 1
     ({"safety=low"}, "car=unacc", "Low safety is a veto (100% Unacc in the data)."),# 1.1
 
+    # Reference: OR is written as two rules with the same conclusion, as on Session 3 slide 13.
     ({"buying=low"}, "cheap_to_buy", "Low buying cost makes the car cheap to buy."),# 2
     ({"buying=med"}, "cheap_to_buy", "Medium buying cost is still considered affordable(ie.cheap to buy)."),# 2.1
 
@@ -31,6 +35,7 @@ RULES = [
     ({"persons=4"}, "family_car", "A car with four seats can fit a family."),# 7
     ({"persons=more"}, "family_car", "A car with more than four seats can fit a family."),# 7.1
 
+    # Reference: several car= answers can be true at once; engine.verdict picks one (conflict resolution, Session 3 slides 14-15).
     ({"family_car", "safety=med"}, "car=acc", "A family car with medium safety is acceptable."),# 8
     ({"family_car", "safety=high"}, "car=acc", "A family car with high safety is acceptable."),# 8.1
 

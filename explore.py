@@ -17,6 +17,7 @@ print(df.isna().sum()) #  number of missing values in each column
 print("\n------------------Duplicated rows------------------")
 print(df.duplicated().sum()) #  number of duplicated rows in the dataframe
 
+# Reference: the biggest class share is the baseline every version must beat, Session 3 slide 26.
 print("\n------------------Value counts of 'class' column------------------") 
 print(df["class"].value_counts(normalize=True)) # normalized value counts of the "class" column
 
@@ -33,6 +34,7 @@ VALUE_ORDER = {
     "safety": ["low", "med", "high"],
 }
 
+# Reference: look at the data before writing rules, step 1 of Session 3 Task 2 (slide 23).
 for col in COLUMNS[:-1]: # for loop to iterate over all columns except the last one
     print("\n--- " + col + " (% of cars with that value) ---")
     table = pd.crosstab(df[col], df["class"], normalize="index") * 100  # share of each class per value, as a percentage
