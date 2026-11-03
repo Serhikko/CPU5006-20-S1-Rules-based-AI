@@ -5,3 +5,4 @@ __pycache__/
 *.pptx
 *.pdf
 ~$*
+.ipynb_checkpoints/
