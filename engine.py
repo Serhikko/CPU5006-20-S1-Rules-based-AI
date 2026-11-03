@@ -1,5 +1,5 @@
 # from Claude Code: the skeleton of this file (imports, function names, docstrings and the step comments).
-# The code inside each function was written by me (Serhii), following the step comments,adn normal comments.
+#The code inside each function and the inline comments were written by me (Serhii), following the step comments.
 
 # Reference: knowledge base and inference engine kept apart, Session 2 slide 21 (Components of Rule-Based Systems).
 from data import COLUMNS
