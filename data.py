@@ -9,7 +9,6 @@ def load(path="data/car.data"):
     return pd.read_csv(path, header=None, names=COLUMNS) # returns pd from read_csv, with the column names specified in COLUMNS
 
 
-# Reference: the hold-out split of Session 3 slides 30-31 (no peeking), done per class so the rare classes land in both halves.
 def split(df, test_share=0.3, seed=42): # splts the dataframe into train and test sets, with a specified test share and random seed
     """Hold out test_share of EACH class, so rare classes appear in both halves."""
     test = df.groupby("class").sample(frac=test_share, random_state=seed) # takes a sample of the dataframe, grouped by the "class" column, with a fraction of test_share and a random seed for reproducibility
