@@ -14,34 +14,60 @@
 # Helper facts that later rules build on are the mammal -> carnivore -> tiger chain of slides 8-9.
 RULES = [
     # Reference: the same two vetoes as the class example on Session 3 slide 13.
-    ({"persons=2"}, "car=unacc", "A car with only two seats is never acceptable (100% Unacc in the data)."),# 1
-    ({"safety=low"}, "car=unacc", "Low safety is a veto (100% Unacc in the data)."),# 1.1
+    ({"persons=2"}, "car=unacc", "A car with only two seats is never acceptable (100% Unacc in the data)."),
+    ({"safety=low"}, "car=unacc", "Low safety is a veto (100% Unacc in the data)."),
 
     # Reference: OR is written as two rules with the same conclusion, as on Session 3 slide 13.
-    ({"buying=low"}, "cheap_to_buy", "Low buying cost makes the car cheap to buy."),# 2
-    ({"buying=med"}, "cheap_to_buy", "Medium buying cost is still considered affordable(ie.cheap to buy)."),# 2.1
+    ({"buying=low"}, "cheap_to_buy", "Low buying cost makes the car cheap to buy."),
+    ({"buying=med"}, "cheap_to_buy", "Medium buying cost is still considered affordable(ie.cheap to buy)."),
 
-    ({"maint=low"}, "cheap_to_run", "Low maintenance costs make the car cheap to maintain."),# 3
-    ({"maint=med"}, "cheap_to_run", "Medium maintenance costs are considered affordable to maintain."),# 3.1
+    ({"maint=low"}, "cheap_to_run", "Low maintenance costs make the car cheap to maintain."),
+    ({"maint=med"}, "cheap_to_run", "Medium maintenance costs are considered affordable to maintain."),
 
-    ({"cheap_to_buy", "cheap_to_run"}, "price=low", "Affordable buying and maintenance costs show a low overall price."),# 4
+    #LOW
+    ({"buying=low", "cheap_to_run"}, "price=low", "Low buying cost combined with affordable maintenance gives a low overall price."),
+    ({"buying=med", "maint=low"}, "price=low", "Medium buying cost combined with low maintenance gives a low overall price."),
+    
 
-    ({"buying=vhigh", "maint=vhigh"}, "price=vhigh", "Very high buying and maintenance costs make the car unaffordable."),# 5
-    ({"buying=vhigh", "maint=high"}, "price=vhigh", "Very high buying costs and high maintenance costs make the car unaffordable."),# 5.1
-    ({"buying=high", "maint=vhigh"}, "price=vhigh", "High buying costs and very high maintenance costs make the car unaffordable."),# 5.2
+    #MED
+    ({"buying=med", "maint=med"}, "price=med", "Medium buying cost combined with medium maintenance gives a medium overall price."),
+    ({"buying=low", "maint=high"}, "price=med", "Low buying cost combined with high maintenance gives a medium overall price."),
 
-    ({"price=vhigh"}, "car=unacc", "A very high overall price makes the car unacceptable."),# 6
+    #HIGH
+    ({"buying=high", "maint=med"}, "price=high", "High buying cost combined with medium maintenance gives a high overall price."),
+    ({"buying=high", "maint=high"}, "price=high", "High buying cost combined with high maintenance gives a high overall price."),
+    ({"buying=med", "maint=vhigh"}, "price=high", "Medium buying cost combined with very high maintenance gives a high overall price."),
+    ({"buying=low", "maint=vhigh"}, "price=high", "Low buying cost combined with very high maintenance gives a high overall price."),
 
-    ({"persons=4"}, "family_car", "A car with four seats can fit a family."),# 7
-    ({"persons=more"}, "family_car", "A car with more than four seats can fit a family."),# 7.1
+    #VHIGH
+    ({"buying=vhigh", "maint=vhigh"}, "price=vhigh", "Very high buying and maintenance costs make the car unaffordable."),
+    ({"buying=vhigh", "maint=high"}, "price=vhigh", "Very high buying costs and high maintenance costs make the car unaffordable."),
+    ({"buying=high", "maint=vhigh"}, "price=vhigh", "High buying costs and very high maintenance costs make the car unaffordable."),
+
+    # UNACC
+    ({"price=vhigh"}, "car=unacc", "A very high overall price makes the car unacceptable."),
+
+    # FAMILY CAR
+    ({"persons=4"}, "family_car", "A car with four seats can fit a family."),
+    ({"persons=more"}, "family_car", "A car with more than four seats can fit a family."),
+
+    #ROOMY
+    ({"lug_boot=med", "doors=4"}, "roomy", "Medium luggage space and four doors is considered roomy."),
+    ({"lug_boot=med", "doors=5more"}, "roomy", "Medium luggage space and five doors is considered roomy."),
+    ({"lug_boot=big"}, "roomy", "Large luggage space is considered roomy."),
 
     # Reference: several car= answers can be true at once; engine.verdict picks one (conflict resolution, Session 3 slides 14-15).
-    ({"family_car", "safety=med"}, "car=acc", "A family car with medium safety is acceptable."),# 8
-    ({"family_car", "safety=high"}, "car=acc", "A family car with high safety is acceptable."),# 8.1
+    #ACCEPTABLE
+    ({"family_car", "safety=med"}, "car=acc", "A family car with medium safety is acceptable."),
+    ({"family_car", "safety=high"}, "car=acc", "A family car with high safety is acceptable."),
 
-    ({"price=low", "family_car", "safety=med"}, "car=good", "An affordable family car with medium safety is considered good."),# 9
-    ({"price=low", "family_car", "safety=high"}, "car=good", "An affordable family car with high safety is considered good."),# 9.1
+    #GOOD
+    ({"price=low", "family_car", "safety=med", "lug_boot=med"}, "car=good", "An affordable family car with medium safety and medium luggage space is considered good."),
+    ({"price=low", "family_car", "safety=med", "lug_boot=big"}, "car=good", "An affordable family car with medium safety and large luggage space is considered good."),
+    ({"price=low", "family_car", "safety=high"}, "car=good", "An affordable family car with high safety is considered good."),
 
-    ({"price=low", "family_car", "safety=high", "lug_boot=med"}, "car=vgood", "An affordable family car with high safety and medium luggage space is considered very good."),# 10
-    ({"price=low", "family_car", "safety=high", "lug_boot=big"}, "car=vgood", "An affordable family car with high safety and large luggage space is considered very good."),# 10.1
+    #VGOOD
+    ({"price=low", "family_car", "safety=high", "roomy"}, "car=vgood", "An affordable family car with high safety and a roomy interior is considered very good."),
+    ({"price=med", "family_car", "safety=high", "roomy"}, "car=vgood", "A family car with medium overall price, high safety and a roomy interior is considered very good."),
 ]
+    
