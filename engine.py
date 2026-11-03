@@ -1,5 +1,5 @@
 # from Claude Code: the skeleton of this file (imports, function names, docstrings and the step comments).
-# The code inside each function was written by me (Serhii), following the step comments.
+# The code inside each function was written by me (Serhii), following the step comments,adn normal comments.
 
 # Reference: knowledge base and inference engine kept apart, Session 2 slide 21 (Components of Rule-Based Systems).
 from data import COLUMNS
@@ -12,7 +12,7 @@ def row_to_facts(row):
 
     # STEP 1: Convert each column into a fact
     for col in COLUMNS[:-1]:
-        facts.add(col + "=" + str(row[col]))
+        facts.add(col + "=" + str(row[col])) # Add the fact to the set
 
     return facts
 
@@ -31,7 +31,7 @@ def forward_chain(facts, rules):
         for conditions, conclusion, reason in rules:
             if conditions <= facts and conclusion not in facts:
                 facts.add(conclusion)
-                fired.append((conditions, conclusion, reason))
+                fired.append((conditions, conclusion, reason)) # Add the rule to the fired list
                 changed = True
 
     return facts, fired
