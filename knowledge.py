@@ -36,6 +36,8 @@ RULES = [
     #HIGH
     ({"buying=high", "maint=med"}, "price=high", "High buying cost combined with medium maintenance gives a high overall price."),
     ({"buying=high", "maint=high"}, "price=high", "High buying cost combined with high maintenance gives a high overall price."),
+    ({"buying=vhigh", "maint=low"}, "price=high", "Very high buying cost combined with low maintenance gives a high overall price."),
+    ({"buying=vhigh", "maint=med"}, "price=high", "Very high buying cost combined with medium maintenance gives a high overall price."),
     ({"buying=med", "maint=vhigh"}, "price=high", "Medium buying cost combined with very high maintenance gives a high overall price."),
     ({"buying=low", "maint=vhigh"}, "price=high", "Low buying cost combined with very high maintenance gives a high overall price."),
 
@@ -46,6 +48,7 @@ RULES = [
 
     # UNACC
     ({"price=vhigh"}, "car=unacc", "A very high overall price makes the car unacceptable."),
+    ({"price=high", "lug_boot=small", "safety=med"}, "car=unacc", "A high overall price with small luggage space and medium safety makes the car unacceptable."),
 
     # FAMILY CAR
     ({"persons=4"}, "family_car", "A car with four seats can fit a family."),
