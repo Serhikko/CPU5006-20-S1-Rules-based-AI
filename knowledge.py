@@ -10,7 +10,7 @@
 # A conclusion starting with "car=" is a final answer.
 # Any other conclusion is a helper fact (a concept) that other rules can use.
 
-# Reference: rules as (set of conditions, conclusion) follow Session 3 slide 8; the third part, the reason, is mine.
+# Reference: rules as (set of conditions, conclusion) follow Session 3 slide 8; the reason sentences in the third part are mine.
 # Helper facts that later rules build on are the mammal -> carnivore -> tiger chain of slides 8-9.
 RULES = [
     # Reference: the same two vetoes as the class example on Session 3 slide 13.
